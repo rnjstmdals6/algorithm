@@ -1,0 +1,28 @@
+import re
+
+def solution(files):
+    result = []
+    for file in files:
+        original = file
+        head = ""
+        number = ""
+
+        for i in range(len(file)):
+            if str.isdigit(file[i]):
+                head = file[:i]
+                number = file[i:]
+                break
+        for i in range(len(number)):
+            if not str.isdigit(number[i]):
+                number = number[:i]
+                break
+        result.append([original, head.lower(), int(number)])
+
+    result.sort(key=lambda x: (x[1], x[2]))
+
+    ans = []
+
+    for i in result:
+        ans.append(i[0])
+
+    return ans
