@@ -1,0 +1,16 @@
+def solution(n):
+    string = ""
+
+    while n:
+        x = n % 3
+        if x == 0:
+            string = '4' + string
+            n = n // 3 - 1
+        elif x == 1:
+            string = '1' + string
+            n = n // 3
+        elif x == 2:
+            string = '2' + string
+            n = n // 3
+
+    return string
