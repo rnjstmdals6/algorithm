@@ -1,0 +1,14 @@
+def solution(numbers, target):
+    n = len(numbers)
+    answer = 0
+    def dfs(depth, result):
+        if depth == n:
+            if result == target:
+                nonlocal answer
+                answer += 1
+            return
+        else:
+            dfs(depth + 1, result + numbers[depth])
+            dfs(depth + 1, result - numbers[depth])
+    dfs(0, 0)
+    return answer
