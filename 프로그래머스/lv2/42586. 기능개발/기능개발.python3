@@ -1,0 +1,18 @@
+from collections import deque
+
+def solution(progresses, speeds):
+    queue1 = deque(progresses)
+    queue2 = deque(speeds)
+    answer = []
+    while queue1:
+        if queue1[0] < 100:
+            for i in range(len(queue1)):
+                queue1[i] += queue2[i]
+        else:
+            cnt = 0
+            while queue1 and queue1[0] > 99:
+                queue1.popleft()
+                queue2.popleft()
+                cnt += 1
+            answer.append(cnt)
+    return answer
