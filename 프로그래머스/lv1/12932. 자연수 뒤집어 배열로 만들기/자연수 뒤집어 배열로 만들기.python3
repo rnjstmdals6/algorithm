@@ -1,0 +1,5 @@
+def solution(n):
+    s = list(str(n))
+    s.reverse()
+    s = list(map(int, s))
+    return s
