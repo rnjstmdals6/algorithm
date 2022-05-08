@@ -1,0 +1,14 @@
+def solution(participant, completion):
+    tree = dict()
+    for i in completion:
+        if i not in tree:
+            tree[i] = 1
+        else:
+            tree[i] += 1
+    for i in participant:
+        if i not in tree:
+            return i
+        else:
+            tree[i] -= 1
+            if tree[i] == -1:
+                return i
