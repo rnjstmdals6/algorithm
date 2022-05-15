@@ -1,0 +1,11 @@
+def solution(N, stages):
+    s = dict()
+    cnt = len(stages)
+    for i in range(1, N + 1):
+        if cnt != 0:
+            nClear = stages.count(i)
+            s[i] = nClear / cnt
+            cnt -= nClear
+        else:
+            s[i] = 0
+    return sorted(s, key=lambda x: s[x], reverse=True)
