@@ -1,0 +1,8 @@
+def solution(arr1, arr2):
+    result = []
+    for x, y in zip(arr1, arr2):
+        n = []
+        for a, b in zip(x, y):
+            n.append(a + b)
+        result.append(n)
+    return result
