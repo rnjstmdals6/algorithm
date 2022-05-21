@@ -1,0 +1,9 @@
+def solution(n):
+    lists = []
+    while True:
+        if n == 0:
+            break
+        b = n % 3
+        n = n // 3
+        lists.append(str(b))
+    return int("".join(lists), 3)
