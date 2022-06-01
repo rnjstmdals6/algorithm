@@ -1,0 +1,41 @@
+import copy
+
+ans = -1
+result = [0,0,0,0,0,0,0,0,0,0,0]
+def dfs(depth, n, peach, lion, idx):
+    global ans, result
+
+    if depth == n:
+        l, p = 0, 0
+        for i in range(10):
+            if peach[i] == 0 and lion[i] == 0:
+                continue
+            elif peach[i] < lion[i]:
+                l += 10 - i
+            else:
+                p += 10 - i
+        if ans < l - p and l - p > 0:
+            ans = l - p
+            result = copy.deepcopy(lion)
+        elif ans == l - p and l - p > 0:
+            for i in range(10, -1, -1):
+                if result[i] == lion[i]:
+                    continue
+                elif result[i] > lion[i]:
+                    break
+                else:
+                    result = copy.deepcopy(lion)
+                    break
+        return
+    for i in range(idx, 11):
+        lion[i] += 1
+        dfs(depth + 1, n, peach, lion, i)
+        lion[i] -= 1
+
+
+def solution(n, info):
+    global result
+    dfs(0, n, info, [0,0,0,0,0,0,0,0,0,0,0], 0)
+    if len(result) == 0 or result.count(0) == 11:
+        return [-1]
+    return result
