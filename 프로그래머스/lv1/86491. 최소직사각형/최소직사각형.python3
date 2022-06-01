@@ -1,0 +1,8 @@
+def solution(sizes):
+    x, y = [], []
+    
+    for a, b in sizes:
+        x.append(max(a, b))
+        y.append(min(a, b))
+        
+    return max(x) * max(y)
