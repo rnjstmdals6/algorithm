@@ -1,0 +1,37 @@
+import string
+def solution(str1, str2):
+
+    str1 = str1.lower()
+    str2 = str2.lower()
+    s1 = []
+    s2 = []
+    for i in range(len(str1) - 1):
+        if str1[i].isalpha() and str1[i+1].isalpha():
+            s1.append(str1[i]+str1[i+1])
+    for i in range(len(str2) - 1):
+        if str2[i].isalpha() and str2[i+1].isalpha():
+            s2.append(str2[i]+str2[i+1])
+
+    s1_temp = s1.copy()
+    s1_result = s1.copy()
+
+    # 합집합
+    for i in s2:
+        if i not in s1_temp:
+            s1_result.append(i)
+        else:
+            s1_temp.remove(i)
+
+    # 교집합
+
+    result = []
+
+    for i in s2:
+        if i in s1:
+            s1.remove(i)
+            result.append(i)
+    if len(result) == 0 and len(s1_result) == 0:
+        return 65536
+    ans = len(result) / len(s1_result)
+    ans = int(ans * 65536)
+    return ans
