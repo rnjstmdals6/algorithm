@@ -1,0 +1,39 @@
+from collections import deque
+
+dx, dy = [-1, 1, 0, 0], [0, 0, -1, 1]
+
+def bfs(graph, x, y):
+    queue = deque()
+    visited = [[False] * 5 for _ in range(5)]
+    visited[x][y] = True
+    queue.append([x, y])
+
+    while queue:
+        ax, ay = queue.pop()
+
+        for i in range(4):
+            nx, ny = ax + dx[i], ay + dy[i]
+
+            if 0 <= nx < 5 and 0 <= ny < 5 and not visited[nx][ny]:
+                if abs(nx - x) + abs(ny - y) <= 2 and graph[nx][ny] == "P":
+                    return 0
+                if abs(nx - x) + abs(ny - y) <= 2 and graph[nx][ny] != 'X':
+                    visited[nx][ny] = True
+                    queue.append([nx, ny])
+    return 1
+
+
+def solution(places):
+    answer = []
+    for graph in places:
+        flag = False
+        for i in range(5):
+            for j in range(5):
+                 if graph[i][j] == 'P' and bfs(graph, i, j) == 0:
+                    flag = True
+                    break
+        if flag:
+            answer.append(0)
+        else:
+            answer.append(1)
+    return answer
