@@ -1,0 +1,42 @@
+from datetime import datetime
+
+
+def solution(fees, records):
+    car_num = dict()
+
+    for r in records:
+        r = r.split()
+        if r[2] == "IN":
+            if r[1] not in car_num:
+                car_num[r[1]] = [r[0], 0, "IN"]
+            else:
+                car_num[r[1]] = [r[0], car_num[r[1]][1], "IN"]
+        else:
+            time_1 = datetime.strptime(car_num[r[1]][0], "%H:%M")
+            time_2 = datetime.strptime(r[0], "%H:%M")
+            time_interval = time_2 - time_1
+            a = str(time_interval).split(":")
+            b = int(a[0]) * 60 + int(a[1])
+
+            car_num[r[1]] = [0, car_num[r[1]][1] + b, "OUT"]
+    result = []
+    for c in car_num.keys():
+        if car_num[c][2] == "IN":
+            time_1 = datetime.strptime(car_num[c][0], "%H:%M")
+            time_2 = datetime.strptime("23:59", "%H:%M")
+            time_interval = time_2 - time_1
+            a = str(time_interval).split(":")
+            b = int(a[0]) * 60 + int(a[1])
+            car_num[c] = [0, car_num[c][1] + b, "OUT"]
+        ans = fees[1] + ((car_num[c][1]-fees[0]) // fees[2]) * fees[3]
+        if (car_num[c][1] - fees[0]) % fees[2] != 0:
+            ans += fees[3]
+        if car_num[c][1] < fees[0] :
+            result.append([c, fees[1]])
+        else:
+            result.append([c, int(ans)])
+    result.sort(key=lambda x:x[0])
+    final = []
+    for i in result:
+        final.append(i[1])
+    return final
