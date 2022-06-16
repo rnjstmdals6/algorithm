@@ -1,0 +1,43 @@
+import copy
+import re
+from itertools import permutations
+
+
+def solution(expression):
+    op = re.findall('[^0-9]', expression)
+    op = list(set(op))
+    op = list(permutations(op, len(op)))
+    s = ''
+    arr = []
+    for i in expression:
+        if i not in ['+', '-', '*']:
+            s += i
+        else:
+            arr.append(int(s))
+            arr.append(i)
+            s = ''
+    arr.append(int(s))
+    result = []
+    for i in op:
+        narr = copy.deepcopy(arr)
+        for j in i:
+            idx = 0
+            while j in narr:
+                if j == '+' and narr[idx] == '+':
+                    a = narr.pop(idx-1)
+                    b = narr.pop(idx)
+                    narr[idx-1] = a + b
+                    idx = -1
+                elif j == '-' and narr[idx] == '-':
+                    a = narr.pop(idx - 1)
+                    b = narr.pop(idx)
+                    narr[idx-1] = a - b
+                    idx = -1
+                elif j == '*' and narr[idx] == '*':
+                    a = narr.pop(idx - 1)
+                    b = narr.pop(idx)
+                    narr[idx-1] = a * b
+                    idx = -1
+                idx += 1
+        result.append(abs(narr[0]))
+    return max(result)
