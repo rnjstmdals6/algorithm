@@ -1,0 +1,25 @@
+sets = ["A", "E", "I", "O", "U"]
+ans = 0
+answer = 0
+
+def dfs(depth, word, result):
+    global ans, answer
+    if depth == 5:
+        return
+    else:
+        for i in range(5):
+            temp = word
+            temp += sets[i]
+            ans += 1
+            if temp == result:
+                answer = ans
+                break
+            dfs(depth + 1, temp, result)
+        return
+
+
+def solution(word):
+    global ans, answer
+    A = 0
+    dfs(0, '', word)
+    return answer
